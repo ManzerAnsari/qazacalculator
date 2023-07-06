@@ -45,6 +45,13 @@ export default function Qaza() {
   useEffect(() => {
     setHijriDate(moment(normalDate, "DD-MM-YYYY").format("iD-iM-iYYYY"));
   }, [normalDate]);
+
+  useEffect(() => {
+    let render = JSON.parse(localStorage.getItem("days"));
+    if (render) {
+      navigate("/QazaRecord");
+    }
+  }, []);
   return (
     <>
       <Grid container spacing={10}>
@@ -60,7 +67,7 @@ export default function Qaza() {
                 disableFuture={true}
                 value={dayjs(normalDate, "DD-MM-YYYY")}
                 format="DD-MM-YYYY"
-                slotProps={{textField:{size:"small"}}}
+                slotProps={{ textField: { size: "small" } }}
                 onChange={(date) => handleChange(date)}
               />
             </LocalizationProvider>
