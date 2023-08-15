@@ -1,5 +1,5 @@
-import { Button, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import moment from "moment-hijri";
@@ -52,89 +52,60 @@ export default function Qaza() {
   }, []);
   return (
     <>
+      <Box sx={{ backgroundColor: '#F5F5F5', minHeight: '100vh' }}>
       {showQaza ? (
         <QazaRecord />
       ) : (
-        <Grid container spacing={10}>
-          <Grid item width="100%">
-            <Grid container spacing={4} display="flex" justifyContent="center">
-              <Typography>Please select your date of birth</Typography>
-            </Grid>
+        <Grid container spacing={3} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '80vh' }}>
+          <Grid item xs={12}>
+            <Typography variant="h5" align="center" style={{ color: '#2E7D32' }}>Please select your date of birth</Typography>
           </Grid>
-          <Grid item width="100%">
-            <Grid container spacing={4} display="flex" justifyContent="center">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  disableFuture={true}
-                  value={dayjs(normalDate, "DD-MM-YYYY")}
-                  format="DD-MM-YYYY"
-                  slotProps={{ textField: { size: "small" } }}
-                  onChange={(date) => handleChange(date)}
-                />
-              </LocalizationProvider>
-            </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                disableFuture={true}
+                value={dayjs(normalDate, "DD-MM-YYYY")}
+                format="DD-MM-YYYY"
+                slotProps={{ textField: { size: "small", fullWidth: true } }}
+                onChange={(date) => handleChange(date)}
+                renderInput={(params) => <div {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
-          <Grid item width="100%">
-            <Grid container spacing={4} display="flex" justifyContent="center">
-              {/* <Typography
-                width={"100%"}
-                display={"flex"}
-                justifyContent={"center"}
-              >
-                {" hijri date:" + hijriDate}
-              </Typography>
-              <Typography
-                width={"100%"}
-                display={"flex"}
-                justifyContent={"center"}
-              >
-                {"selected date is :" + normalDate + "  "}
-              </Typography> */}
-              <Typography
-                width={"100%"}
-                display={"flex"}
-                justifyContent={"center"}
-              >
-                {message && "message : " + message}
-              </Typography>
-            </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6" align="center" color="secondary">
+              {message && "Message: " + message}
+            </Typography>
           </Grid>
-          <Grid item width="100%">
-            <Grid
-              container
-              spacing={4}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              fullWidth
+              size="medium"
+              sx={{ m: 1, backgroundColor: '#2E7D32', color: '#FFFFFF' }}
+              variant="contained"
+              onClick={() => handleButton(12)}
             >
-              <Button
-                size="medium"
-                sx={{ m: 2 }}
-                variant="contained"
-                onClick={() => handleButton(12)}
-              >
-                Check Qaza for mens
-              </Button>
-              <Button
-                size="medium"
-                sx={{ m: 2 }}
-                variant="contained"
-                onClick={() => handleButton(15)}
-              >
-                Check Qaza for womens
-              </Button>
-            </Grid>
+              Check Qaza for men
+            </Button>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              fullWidth
+              size="medium"
+              sx={{ m: 1, backgroundColor: '#2E7D32', color: '#FFFFFF' }}
+              variant="contained"
+              onClick={() => handleButton(15)}
+            >
+              Check Qaza for women
+            </Button>
           </Grid>
         </Grid>
       )}
       {showQaza && (
-        <Grid container display="flex" justifyContent="center">
+        <Grid container justifyContent="center" mt={2}>
           <Button
             size="medium"
-            sx={{ m: 2 }}
+            sx={{ m: 2, backgroundColor: '#2E7D32', color: '#FFFFFF' }}
             variant="contained"
             onClick={() => setShowQaza(false)}
           >
@@ -142,6 +113,7 @@ export default function Qaza() {
           </Button>
         </Grid>
       )}
+    </Box>
     </>
   );
 }

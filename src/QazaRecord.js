@@ -1,5 +1,5 @@
-import { Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Grid, IconButton, InputAdornment, TextField, Box } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
@@ -35,183 +35,52 @@ export default function QazaRecord() {
   };
   return (
     <>
+      <Box sx={{ backgroundColor: '#F5F5F5', padding: '2rem' }}>
       <Grid
         container
         spacing={4}
-        display="flex"
-        justifyContent="center"
+        direction="column"
         alignItems="center"
-        flexDirection="column"
+        justifyContent="center"
       >
-        <Grid item>
-          <TextField
-            name="fazar"
-            id="fazar"
-            label="Fazar"
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            value={days.fazar}
-            onChange={(e) => handleChange(e)}
-            InputProps={{
-              sx: { "& input": { textAlign: "center" } },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton onClick={() => handleDecreament("fazar")}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => handleIncreament("fazar")}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            name="zuhar"
-            id="zuhar"
-            label="Zuhar"
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            value={days.zuhar}
-            onChange={(e) => handleChange(e)}
-            InputProps={{
-              sx: { "& input": { textAlign: "center" } },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton onClick={() => handleDecreament("zuhar")}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => handleIncreament("zuhar")}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            name="asar"
-            id="asar"
-            label="Asar"
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            value={days.asar}
-            onChange={(e) => handleChange(e)}
-            InputProps={{
-              sx: { "& input": { textAlign: "center" } },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton onClick={() => handleDecreament("asar")}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => handleIncreament("asar")}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            name="magrib"
-            id="magrib"
-            label="Magrib"
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            value={days.magrib}
-            onChange={(e) => handleChange(e)}
-            InputProps={{
-              sx: { "& input": { textAlign: "center" } },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton onClick={() => handleDecreament("magrib")}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => handleIncreament("magrib")}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            name="isha"
-            id="isha"
-            label="Isha"
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            value={days.isha}
-            onChange={(e) => handleChange(e)}
-            InputProps={{
-              sx: { "& input": { textAlign: "center" } },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton onClick={() => handleDecreament("isha")}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => handleIncreament("isha")}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            name="witr"
-            id="witr"
-            label="Witr"
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            value={days.witr}
-            onChange={(e) => handleChange(e)}
-            InputProps={{
-              sx: { "& input": { textAlign: "center" } },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton onClick={() => handleDecreament("witr")}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => handleIncreament("witr")}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
+        {["fazar", "zuhar", "asar", "magrib", "isha", "witr"].map((prayer, index) => (
+          <Grid key={index} item xs={12} sm={8} md={6}>
+            <TextField
+              name={prayer}
+              id={prayer}
+              label={prayer.charAt(0).toUpperCase() + prayer.slice(1)}
+              variant="outlined"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              value={days[prayer]}
+              onChange={handleChange}
+              InputProps={{
+                sx: {
+                  "& input": { textAlign: "center", color: '#2E7D32' },
+                  "& fieldset": { borderColor: '#2E7D32' },
+                  "&:hover fieldset": { borderColor: '#2E7D32' },
+                  "&.Mui-focused fieldset": { borderColor: '#2E7D32' },
+                },
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton onClick={() => handleDecreament(prayer)}>
+                      <RemoveCircleOutlineIcon color="primary" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => handleIncreament(prayer)}>
+                      <AddCircleOutlineIcon color="primary" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+        ))}
       </Grid>
+    </Box>
     </>
   );
 }
