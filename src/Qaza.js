@@ -76,7 +76,7 @@ export default function Qaza() {
           </Grid>
           <Grid item width="100%">
             <Grid container spacing={4} display="flex" justifyContent="center">
-              <Typography
+              {/* <Typography
                 width={"100%"}
                 display={"flex"}
                 justifyContent={"center"}
@@ -89,7 +89,7 @@ export default function Qaza() {
                 justifyContent={"center"}
               >
                 {"selected date is :" + normalDate + "  "}
-              </Typography>
+              </Typography> */}
               <Typography
                 width={"100%"}
                 display={"flex"}
