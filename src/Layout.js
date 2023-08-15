@@ -93,7 +93,7 @@ export default function Layout() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Persistent drawer
+              Qaza Namaz Calculator
             </Typography>
           </Toolbar>
         </AppBar>

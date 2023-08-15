@@ -4,12 +4,13 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import moment from "moment-hijri";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import QazaRecord from "./QazaRecord";
 
 export default function Qaza() {
   const [normalDate, setNormalDate] = useState(moment().format("DD-MM-YYYY"));
   const [hijriDate, setHijriDate] = useState(moment().format("iD-iM-iYYYY"));
   const [message, setMessage] = useState("");
+  const [showQaza, setShowQaza] = useState(false);
   const today = moment();
   const times = {
     fazar: "",
@@ -19,7 +20,6 @@ export default function Qaza() {
     isha: "",
     witr: "",
   };
-  const navigate = useNavigate();
   const handleChange = (date) => {
     setNormalDate(moment(new Date(date)).format("DD-MM-YYYY"));
   };
@@ -32,13 +32,14 @@ export default function Qaza() {
       setMessage("no qaza for you");
     } else {
       setMessage("");
-      let qazaD = moment(hijriDate, "iD-iM-iYYYY").add(12, "iYear");
+      let qazaD = moment(hijriDate, "iD-iM-iYYYY").add(year, "iYear");
       let diff = today.diff(qazaD, "days");
       Object.keys(times).forEach((key) => {
         times[key] = parseInt(diff);
       });
       localStorage.setItem("days", JSON.stringify(times));
-      navigate("/QazaRecord");
+      setShowQaza(true);
+      // navigate("/QazaRecord");
     }
   };
 
@@ -47,87 +48,100 @@ export default function Qaza() {
   }, [normalDate]);
 
   useEffect(() => {
-    let render = JSON.parse(localStorage.getItem("days"));
-    if (render) {
-      navigate("/QazaRecord");
-    }
+    setShowQaza(!!JSON.parse(localStorage.getItem("days")));
   }, []);
   return (
     <>
-      <Grid container spacing={10}>
-        <Grid item width="100%">
-          <Grid container spacing={4} display="flex" justifyContent="center">
-            <Typography>Please select your date of birth</Typography>
+      {showQaza ? (
+        <QazaRecord />
+      ) : (
+        <Grid container spacing={10}>
+          <Grid item width="100%">
+            <Grid container spacing={4} display="flex" justifyContent="center">
+              <Typography>Please select your date of birth</Typography>
+            </Grid>
+          </Grid>
+          <Grid item width="100%">
+            <Grid container spacing={4} display="flex" justifyContent="center">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  disableFuture={true}
+                  value={dayjs(normalDate, "DD-MM-YYYY")}
+                  format="DD-MM-YYYY"
+                  slotProps={{ textField: { size: "small" } }}
+                  onChange={(date) => handleChange(date)}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+          <Grid item width="100%">
+            <Grid container spacing={4} display="flex" justifyContent="center">
+              <Typography
+                width={"100%"}
+                display={"flex"}
+                justifyContent={"center"}
+              >
+                {" hijri date:" + hijriDate}
+              </Typography>
+              <Typography
+                width={"100%"}
+                display={"flex"}
+                justifyContent={"center"}
+              >
+                {"selected date is :" + normalDate + "  "}
+              </Typography>
+              <Typography
+                width={"100%"}
+                display={"flex"}
+                justifyContent={"center"}
+              >
+                {message && "message : " + message}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item width="100%">
+            <Grid
+              container
+              spacing={4}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                size="medium"
+                sx={{ m: 2 }}
+                variant="contained"
+                onClick={() => handleButton(12)}
+              >
+                Check Qaza for mens
+              </Button>
+              <Button
+                size="medium"
+                sx={{ m: 2 }}
+                variant="contained"
+                onClick={() => handleButton(15)}
+              >
+                Check Qaza for womens
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item width="100%">
-          <Grid container spacing={4} display="flex" justifyContent="center">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                disableFuture={true}
-                value={dayjs(normalDate, "DD-MM-YYYY")}
-                format="DD-MM-YYYY"
-                slotProps={{ textField: { size: "small" } }}
-                onChange={(date) => handleChange(date)}
-              />
-            </LocalizationProvider>
-          </Grid>
-        </Grid>
-        <Grid item width="100%">
-          <Grid container spacing={4} display="flex" justifyContent="center">
-            <Typography
-              width={"100%"}
-              display={"flex"}
-              justifyContent={"center"}
-            >
-              {" hijri date:" + hijriDate}
-            </Typography>
-            <Typography
-              width={"100%"}
-              display={"flex"}
-              justifyContent={"center"}
-            >
-              {"selected date is :" + normalDate + "  "}
-            </Typography>
-            <Typography
-              width={"100%"}
-              display={"flex"}
-              justifyContent={"center"}
-            >
-              {message && "message : " + message}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid item width="100%">
-          <Grid
-            container
-            spacing={4}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
+      )}
+      {showQaza && (
+        <Grid container display="flex" justifyContent="center">
+          <Button
+            size="medium"
+            sx={{ m: 2 }}
+            variant="contained"
+            onClick={() => setShowQaza(false)}
           >
-            <Button
-              size="medium"
-              sx={{ m: 2 }}
-              variant="contained"
-              onClick={() => handleButton(12)}
-            >
-              Check Qaza for mens
-            </Button>
-            <Button
-              size="medium"
-              sx={{ m: 2 }}
-              variant="contained"
-              onClick={() => handleButton(15)}
-            >
-              Check Qaza for womens
-            </Button>
-          </Grid>
+            Set Qaza Namaz Again
+          </Button>
         </Grid>
-      </Grid>
+      )}
     </>
   );
 }
