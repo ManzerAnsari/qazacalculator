@@ -1,6 +1,7 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Container, Paper, Grid } from '@mui/material';
+import { Typography, Button, Container, Paper, Grid } from '@mui/material';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 const StyledContainer = styled(Container)`
   margin-top: 24px;
@@ -21,9 +22,10 @@ const StyledPaper = styled(Paper)`
 `;
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div>
-      <AppBar position="static" sx={{ backgroundColor: '#2E7D32' }}>
+      {/* <AppBar position="static" sx={{ backgroundColor: '#2E7D32' }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Qaza Namaz Calculator
@@ -31,7 +33,7 @@ export default function Home() {
           <Button color="inherit">About</Button>
           <Button color="inherit">Contact</Button>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <StyledContainer>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12} md={6}>
@@ -48,6 +50,7 @@ export default function Home() {
                 color="primary"
                 size="large"
                 sx={{ marginTop: '20px' }}
+                onClick={() => navigate("/Qaza")}
               >
                 Get Started
               </Button>
